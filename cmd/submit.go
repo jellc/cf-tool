@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"fmt"
 	"os/exec"
+	"path/filepath"
 
 	"github.com/xalanq/cf-tool/client"
 	"github.com/xalanq/cf-tool/config"
@@ -19,11 +20,13 @@ func Submit() (err error) {
 		return
 	}
 
-	cmd := exec.Command("my-bundle",filename,"bundled")
+	bundledname := withoutext(filename) + "_bundled"
+
+	cmd := exec.Command("my-bundle",filename,bundledname)
 	if ret := cmd.Run(); ret != nil { return }
 	fmt.Println("INFO: successfully bundled.")
 
-	bytes, err := ioutil.ReadFile("bundled")
+	bytes, err := ioutil.ReadFile(bundledname)
 	if err != nil {
 		return
 	}
@@ -36,4 +39,8 @@ func Submit() (err error) {
 		}
 	}
 	return
+}
+
+func withoutext(path string) string {
+	return filepath.Base(path[:len(path)-len(filepath.Ext(path))])
 }
