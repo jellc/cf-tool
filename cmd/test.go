@@ -183,7 +183,6 @@ func Test() (err error) {
 			var cmds []string
 			for _, e := range wcmds {
 				if e == "&&" {
-					fmt.Println("and!")
 					cmd := exec.Command(cmds[0], cmds[1:]...)
 					cmd.Stdout = os.Stdout
 					cmd.Stderr = os.Stderr
