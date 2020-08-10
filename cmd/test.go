@@ -179,7 +179,20 @@ func Test() (err error) {
 	run := func(script string) error {
 		if s := filter(script); len(s) > 0 {
 			fmt.Println(s)
-			cmds := splitCmd(s)
+			wcmds := splitCmd(s)
+			var cmds []string
+			for _, e := range wcmds {
+				if e == "&&" {
+					fmt.Println("and!")
+					cmd := exec.Command(cmds[0], cmds[1:]...)
+					cmd.Stdout = os.Stdout
+					cmd.Stderr = os.Stderr
+					if ret := cmd.Run(); ret != nil { return nil }
+					cmds = nil
+				} else {
+					cmds = append(cmds, e)
+				}
+			}
 			cmd := exec.Command(cmds[0], cmds[1:]...)
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr

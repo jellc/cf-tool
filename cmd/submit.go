@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"io/ioutil"
+	"fmt"
+	"os/exec"
 
 	"github.com/xalanq/cf-tool/client"
 	"github.com/xalanq/cf-tool/config"
@@ -17,7 +19,11 @@ func Submit() (err error) {
 		return
 	}
 
-	bytes, err := ioutil.ReadFile(filename)
+	cmd := exec.Command("my-bundle",filename,"bundled")
+	if ret := cmd.Run(); ret != nil { return }
+	fmt.Println("INFO: successfully bundled.")
+
+	bytes, err := ioutil.ReadFile("bundled")
 	if err != nil {
 		return
 	}
