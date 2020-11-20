@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"io/ioutil"
-	"fmt"
+	"os"
 	"os/exec"
 	"path/filepath"
 
@@ -22,9 +22,12 @@ func Submit() (err error) {
 
 	bundledname := withoutext(filename) + "_bundled"
 
-	cmd := exec.Command("my-bundle",filename,bundledname)
-	if ret := cmd.Run(); ret != nil { return }
-	fmt.Println("INFO: successfully bundled.")
+	cmd := exec.Command("bash", "-c", "/bin/python3.8 ~/my-bundle "+filename+" "+bundledname)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if ret := cmd.Run(); ret != nil {
+		return
+	}
 
 	bytes, err := ioutil.ReadFile(bundledname)
 	if err != nil {

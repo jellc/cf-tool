@@ -71,9 +71,9 @@ func judge(sampleID, command string) error {
 	var o bytes.Buffer
 	output := io.Writer(&o)
 
-	cmds := splitCmd(command)
+	// cmds := splitCmd(command)
 
-	cmd := exec.Command(cmds[0], cmds[1:]...)
+	cmd := exec.Command("bash", "-c", command)
 	cmd.Stdin = input
 	cmd.Stdout = output
 	cmd.Stderr = os.Stderr
@@ -186,7 +186,9 @@ func Test() (err error) {
 					cmd := exec.Command(cmds[0], cmds[1:]...)
 					cmd.Stdout = os.Stdout
 					cmd.Stderr = os.Stderr
-					if ret := cmd.Run(); ret != nil { return nil }
+					if ret := cmd.Run(); ret != nil {
+						return nil
+					}
 					cmds = nil
 				} else {
 					cmds = append(cmds, e)
