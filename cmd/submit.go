@@ -1,17 +1,28 @@
 package cmd
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
 
+	"github.com/fatih/color"
 	"github.com/xalanq/cf-tool/client"
 	"github.com/xalanq/cf-tool/config"
 )
 
 // Submit command
 func Submit() (err error) {
+	// confirm
+	color.Cyan("Are you sure to submit? (y/n)")
+	var ans string
+	fmt.Scan(&ans)
+	if ans != "y" {
+		color.Magenta("Submit canceled")
+		return
+	}
+
 	cln := client.Instance
 	cfg := config.Instance
 	info := Args.Info
@@ -20,7 +31,7 @@ func Submit() (err error) {
 		return
 	}
 
-	bundledname := withoutext(filename) + "_bundled"
+	bundledname := withoutext(filename) + ".bdl"
 
 	cmd := exec.Command("bash", "-c", "/bin/python3.8 ~/my-bundle "+filename+" "+bundledname)
 	cmd.Stdout = os.Stdout
