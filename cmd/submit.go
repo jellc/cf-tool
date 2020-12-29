@@ -19,7 +19,7 @@ func Submit() (err error) {
 	var ans string
 	fmt.Scan(&ans)
 	if ans != "y" {
-		color.Magenta("Submit canceled")
+		color.Magenta("Submit canceled.")
 		return
 	}
 
