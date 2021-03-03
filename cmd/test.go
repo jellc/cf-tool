@@ -62,8 +62,8 @@ func plain(raw []byte) string {
 }
 
 func judge(sampleID, command string) error {
-	inPath := fmt.Sprintf("in%v.txt", sampleID)
-	ansPath := fmt.Sprintf("ans%v.txt", sampleID)
+	inPath := fmt.Sprintf("test/%v.in", sampleID)
+	ansPath := fmt.Sprintf("test/%v.out", sampleID)
 	input, err := os.Open(inPath)
 	if err != nil {
 		return err

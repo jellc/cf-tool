@@ -61,9 +61,11 @@ func (c *Client) ParseProblem(URL, path string, mu *sync.Mutex) (samples int, st
 		standardIO = false
 	}
 
+	os.Mkdir(filepath.Join(path, "test"), 0777)
+
 	for i := 0; i < len(input); i++ {
-		fileIn := filepath.Join(path, fmt.Sprintf("in%v.txt", i+1))
-		fileOut := filepath.Join(path, fmt.Sprintf("ans%v.txt", i+1))
+		fileIn := filepath.Join(path, fmt.Sprintf("test/%v.in", i+1))
+		fileOut := filepath.Join(path, fmt.Sprintf("test/%v.out", i+1))
 		e := ioutil.WriteFile(fileIn, input[i], 0644)
 		if e != nil {
 			if mu != nil {
