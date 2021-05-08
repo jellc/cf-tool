@@ -63,7 +63,7 @@ func (c *Client) ParseProblem(URL, path string, mu *sync.Mutex) (samples int, st
 	}
 
 	// oj-template
-	cmd := exec.Command("bash", "-c", "/bin/python3.8 /usr/local/bin/oj-template -t ./template "+URL)
+	cmd := exec.Command("oj-template", "-t", "./template", URL)
 	cmd.Dir = filepath.Dir(os.Args[0])
 	out, err := cmd.Output()
 	if err != nil {
