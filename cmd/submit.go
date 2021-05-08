@@ -33,7 +33,7 @@ func Submit() (err error) {
 
 	bundledname := withoutext(filename) + ".bdl"
 
-	cmd := exec.Command("bash", "-c", "/bin/python3.8 ~/my-bundle "+filename+" "+bundledname)
+	cmd := exec.Command("bash", "-c", "my-bundle "+filename+" "+bundledname)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if ret := cmd.Run(); ret != nil {
