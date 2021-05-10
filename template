@@ -17,8 +17,10 @@
         ]) + "}"
         hook.register_filter_command(["yapf", "--style", format_config], data=data)
 %>\
-#!python
+#! python
+import os
 import random
+import subprocess
 
 def main():
 ${python.generate_input(data)}
